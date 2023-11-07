@@ -4,7 +4,7 @@ Both MotifDiscovery or FIMO(source in MEME-Suit) are powerful tool to reveal whi
 
 No matter which kind of tool you use, the preference from strand, similarity cut-off, and existence of reverse complement have not been reveald. Here this repository applied slide window with bin size = 25, window width = 100, and median/mean method to show motif(K-mer) distribution among this vairables.
 
-[At kmer_distri.pdf](https://github.com/LavakauT/K-mer_distribution/files/13276838/At.kmer_distri.pdf)
+
 
 
 
