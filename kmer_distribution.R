@@ -2,7 +2,7 @@
 ## require packages---------
 library(dplyr)
 library(ggplot2)
-dir <- '/Users/user/Desktop/2018_TPC'
+dir <- '/Users/user/Desktop/At'
 groups <- list.files(dir,
                         pattern="*",
                         full.names=FALSE)
@@ -56,6 +56,7 @@ for (x in 1:length(groups)) {
           
           pos.1 <- rbind(pos.1, pos.2) # gene-kmer-location long data.frame
         }
+      }
         
         dis <- pos.1 %>%
           select(3)
@@ -184,8 +185,8 @@ for (x in 1:length(groups)) {
         # calculate-----------
         # bin:100; sliding window:25; median
         library(zoo)
-        pos.win <- rollapply(window$pos, width = 100, median, by = 25, partial = FALSE)
-        neg.win <- rollapply(window$neg, width = 100, median, by = 25, partial = FALSE)
+        pos.win <- rollapply(window$pos, width = 100, mean, by = 25, partial = FALSE) # median/mean
+        neg.win <- rollapply(window$neg, width = 100, mean, by = 25, partial = FALSE) # median/mean
         
         
         tp.tn <- pos.win/neg.win
@@ -204,20 +205,33 @@ for (x in 1:length(groups)) {
       }
     }
   }
-}
 
-# first kind
+
+
+
+
+# bin = 100; sliding window = 25; mean
+# plot-----------
+pdf(paste(dir, 'kmer_distri.pdf'),
+    width = 12, height = 12)
+
+
 ggplot(com.res, aes(x = bin,
                     y = zscore)) +
-  geom_line(aes(colour = group), linewidth = 2)+
+  geom_line(aes(colour = cut.off), linewidth = 1)+
   # geom_point(size=2,shape=21) +
-  labs(title = expression(italic(bold("K-mers distribution"))),
-       subtitle = expression(italic("bin = 100; sliding window = 25; median")),
+  labs(title = expression(bolditalic("K-mers distribution")),
+       subtitle = expression(bolditalic("bin = 100; sliding window = 25; mean")),
        x = 'Distance to TSS (bp)',
-       y = 'TP/TN (z-score)') +
+       y = 'TP/TN (z-score)',
+       colour = 'cut-off') +
   scale_x_continuous('Distance to TSS (kb)',
                      limits = c(0,1500),
                      breaks = seq(0, 1500, 500),
                      labels = c('-1.0','-0.5', 'TSS', '0.5')) +
-  facet_grid(cut.off ~ group) +
-  theme_classic()
+  facet_grid(strand ~ group) +
+  theme_classic() +
+  theme(strip.text = element_text(size = 10,
+                                  face = 'bold'))
+
+dev.off()
