@@ -4,3 +4,5 @@ Both MotifDiscovery or FIMO(source in MEME-Suit) are powerful tool to reveal whi
 
 No matter which kind of tool you use, the preference from strand, similarity cut-off, and existence of reverse complement have not been reveald. Here this repository applied slide window with bin size = 25, window width = 100, and median/mean method to show motif(K-mer) distribution among this vairables.
 
+# KINDLY REMINDER
+Once you chose a low cut-off to grab all possible motif matching events, this will make your input dataframe become high dimension. Ｗe suggested not to run on your local computer because it consums lots of resources and times. HPC is a better place to run it.
